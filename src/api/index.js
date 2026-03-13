@@ -25,12 +25,12 @@ export default {
   getRanking: () => api.get('/classroom/ranking'),
   getAlerts: () => api.get('/classroom/alerts'),
   getStats: () => api.get('/classroom/stats'),
-  getStation: (id) => api.get(`/classroom/stations/${id}`),
-  getThumbnail: (id) => api.get(`/classroom/stations/${id}/thumbnail`),
+  getStation: (id) => api.get(`/classroom/station/${id}`),
+  getThumbnail: (id) => api.get(`/classroom/station/${id}/thumbnail`),
 
   // ---- 教师指导 ----
   sendGuidance: (stationId, type, message, sender = 'Teacher') =>
-    api.post(`/classroom/stations/${stationId}/guidance`, {
+    api.post(`/classroom/station/${stationId}/guidance`, {
       station_id: stationId,
       type,
       message,
@@ -46,6 +46,8 @@ export default {
   resetSession: () => api.post('/classroom/reset'),
 
   // ---- Pipeline (新增) ----
+  runPipeline: (images_b64, station_id = 'teacher') =>
+    api.post('/pipeline/run', { station_id, images_b64 }),
   submitPipeline: (images_b64, reference_path = null) =>
     api.post('/pipeline/submit', { images_b64, reference_path }),
   getPipelineStatus: (jobId) => api.get(`/pipeline/status/${jobId}`),
